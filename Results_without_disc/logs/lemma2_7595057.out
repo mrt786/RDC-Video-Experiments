@@ -1,0 +1,361 @@
+Job started on g338 at Tue Sep 22 16:43:19 CDT 2026
+Job ID: 7595057
+Job started on g338 at Tue Sep 22 16:43:19 CDT 2026
+Job ID: 7595057
+Lambda CLS: 0.0
+Python:
+/home/tariq1/envs/lemma2_env/bin/python
+Python 3.11.11
+PyTorch:
+2.3.1+cu121
+True
+
+============================================
+Step 1/4: I-frame compressor
+============================================
+Step 1 complete: ./saved_models/compressed/Iframe_z_dim__L_/Iframe_dim_128_z_dim_4_L_2_single_bit_False_bs_64_lambdaMSE_1.0_lambdaCLS_0.0
+Results saved in: ./saved_models/compressed/Iframe_z_dim__L_/
+Lambda CLS: 0.0
+Finished at Tue Sep 22 16:43:21 CDT 2026
+============================================
+
+============================================
+Step 2/4: P-frame compressor
+============================================
+Step 1 complete: ./saved_models/compressed/Iframe_z_dim__L_/Pframe_dim_128_z_dim_2_L_2_single_bit_False_bs_64_lambdaMSE_1.0_lambdaCLS_0.0
+Results saved in: ./saved_models/compressed/Iframe_z_dim__L_/
+Lambda CLS: 0.0
+Finished at Tue Sep 22 16:43:21 CDT 2026
+============================================
+
+============================================
+Step 3/4: Universal Architecture
+============================================
+Settings:  Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained
+Loaded trained classifier from ./trained_classifier.pth
+[-1.0, 1.0]
+[-1.0, 1.0]
+Pre-Trained Models are loaded...
+Finished Loading MNIST!
+Epoch [1/80] Batch [0/937] Loss: 0.0190 Distortion: 0.0190 Classification: 0.4573
+Epoch [1/80] Batch [100/937] Loss: 0.0181 Distortion: 0.0181 Classification: 3.0772
+Epoch [1/80] Batch [200/937] Loss: 0.0184 Distortion: 0.0184 Classification: 3.9242
+Epoch [1/80] Batch [300/937] Loss: 0.0187 Distortion: 0.0187 Classification: 3.4176
+Epoch [1/80] Batch [400/937] Loss: 0.0187 Distortion: 0.0187 Classification: 3.5407
+Epoch [1/80] Batch [500/937] Loss: 0.0188 Distortion: 0.0188 Classification: 3.4484
+Epoch [1/80] Batch [600/937] Loss: 0.0185 Distortion: 0.0185 Classification: 3.7997
+Epoch [1/80] Batch [700/937] Loss: 0.0185 Distortion: 0.0185 Classification: 3.5936
+Epoch [1/80] Batch [800/937] Loss: 0.0173 Distortion: 0.0173 Classification: 3.7701
+Epoch [1/80] Batch [900/937] Loss: 0.0185 Distortion: 0.0185 Classification: 3.3055
+Epoch: 1 | MSE [Dist: 0.0221, Cls: 0.7116, Acc: 0.6900] | MSE [Dist: 0.0183, Cls: 3.3680, Acc: 0.1178] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0001.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0001.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0001.png
+Epoch: 2 | MSE [Dist: 0.0220, Cls: 0.7172, Acc: 0.6914] | MSE [Dist: 0.0182, Cls: 3.3722, Acc: 0.1241] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 3 | MSE [Dist: 0.0221, Cls: 0.7146, Acc: 0.6902] | MSE [Dist: 0.0182, Cls: 3.3828, Acc: 0.1246] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 4 | MSE [Dist: 0.0220, Cls: 0.7083, Acc: 0.6936] | MSE [Dist: 0.0181, Cls: 3.2754, Acc: 0.1215] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 5 | MSE [Dist: 0.0220, Cls: 0.7110, Acc: 0.6917] | MSE [Dist: 0.0182, Cls: 3.2361, Acc: 0.1354] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0005.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0005.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0005.png
+Epoch [6/80] Batch [15/937] Loss: 0.0190 Distortion: 0.0190 Classification: 3.1026
+Epoch [6/80] Batch [115/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.6535
+Epoch [6/80] Batch [215/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.4243
+Epoch [6/80] Batch [315/937] Loss: 0.0186 Distortion: 0.0186 Classification: 3.5940
+Epoch [6/80] Batch [415/937] Loss: 0.0182 Distortion: 0.0182 Classification: 3.4655
+Epoch [6/80] Batch [515/937] Loss: 0.0168 Distortion: 0.0168 Classification: 3.4486
+Epoch [6/80] Batch [615/937] Loss: 0.0180 Distortion: 0.0180 Classification: 3.9303
+Epoch [6/80] Batch [715/937] Loss: 0.0174 Distortion: 0.0174 Classification: 3.1689
+Epoch [6/80] Batch [815/937] Loss: 0.0160 Distortion: 0.0160 Classification: 2.9807
+Epoch [6/80] Batch [915/937] Loss: 0.0178 Distortion: 0.0178 Classification: 3.3632
+Epoch: 6 | MSE [Dist: 0.0220, Cls: 0.7159, Acc: 0.6864] | MSE [Dist: 0.0180, Cls: 3.3799, Acc: 0.1334] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 7 | MSE [Dist: 0.0221, Cls: 0.7199, Acc: 0.6908] | MSE [Dist: 0.0181, Cls: 3.2314, Acc: 0.1222] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 8 | MSE [Dist: 0.0221, Cls: 0.7108, Acc: 0.6898] | MSE [Dist: 0.0181, Cls: 3.2561, Acc: 0.1526] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 9 | MSE [Dist: 0.0220, Cls: 0.7161, Acc: 0.6897] | MSE [Dist: 0.0180, Cls: 3.1823, Acc: 0.1381] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 10 | MSE [Dist: 0.0220, Cls: 0.7167, Acc: 0.6890] | MSE [Dist: 0.0180, Cls: 3.3577, Acc: 0.1399] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0010.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0010.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0010.png
+Epoch [11/80] Batch [30/937] Loss: 0.0172 Distortion: 0.0172 Classification: 2.8083
+Epoch [11/80] Batch [130/937] Loss: 0.0171 Distortion: 0.0171 Classification: 2.9741
+Epoch [11/80] Batch [230/937] Loss: 0.0186 Distortion: 0.0186 Classification: 3.0143
+Epoch [11/80] Batch [330/937] Loss: 0.0181 Distortion: 0.0181 Classification: 3.6043
+Epoch [11/80] Batch [430/937] Loss: 0.0189 Distortion: 0.0189 Classification: 3.1042
+Epoch [11/80] Batch [530/937] Loss: 0.0176 Distortion: 0.0176 Classification: 3.0916
+Epoch [11/80] Batch [630/937] Loss: 0.0186 Distortion: 0.0186 Classification: 3.2741
+Epoch [11/80] Batch [730/937] Loss: 0.0184 Distortion: 0.0184 Classification: 3.3748
+Epoch [11/80] Batch [830/937] Loss: 0.0188 Distortion: 0.0188 Classification: 3.4664
+Epoch [11/80] Batch [930/937] Loss: 0.0187 Distortion: 0.0187 Classification: 3.5183
+Epoch: 11 | MSE [Dist: 0.0220, Cls: 0.7104, Acc: 0.6912] | MSE [Dist: 0.0179, Cls: 3.2753, Acc: 0.1387] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 12 | MSE [Dist: 0.0220, Cls: 0.7150, Acc: 0.6881] | MSE [Dist: 0.0179, Cls: 3.2752, Acc: 0.1315] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 13 | MSE [Dist: 0.0220, Cls: 0.7186, Acc: 0.6870] | MSE [Dist: 0.0179, Cls: 3.2704, Acc: 0.1432] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 14 | MSE [Dist: 0.0221, Cls: 0.7163, Acc: 0.6879] | MSE [Dist: 0.0179, Cls: 3.1912, Acc: 0.1412] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 15 | MSE [Dist: 0.0221, Cls: 0.7094, Acc: 0.6895] | MSE [Dist: 0.0179, Cls: 3.2687, Acc: 0.1434] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0015.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0015.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0015.png
+Epoch [16/80] Batch [45/937] Loss: 0.0180 Distortion: 0.0180 Classification: 3.2220
+Epoch [16/80] Batch [145/937] Loss: 0.0176 Distortion: 0.0176 Classification: 3.0280
+Epoch [16/80] Batch [245/937] Loss: 0.0169 Distortion: 0.0169 Classification: 3.0519
+Epoch [16/80] Batch [345/937] Loss: 0.0196 Distortion: 0.0196 Classification: 3.2988
+Epoch [16/80] Batch [445/937] Loss: 0.0181 Distortion: 0.0181 Classification: 3.4765
+Epoch [16/80] Batch [545/937] Loss: 0.0194 Distortion: 0.0194 Classification: 3.2428
+Epoch [16/80] Batch [645/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.3254
+Epoch [16/80] Batch [745/937] Loss: 0.0184 Distortion: 0.0184 Classification: 2.8931
+Epoch [16/80] Batch [845/937] Loss: 0.0170 Distortion: 0.0170 Classification: 3.6594
+Epoch: 16 | MSE [Dist: 0.0221, Cls: 0.7084, Acc: 0.6917] | MSE [Dist: 0.0180, Cls: 3.2819, Acc: 0.1380] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 17 | MSE [Dist: 0.0221, Cls: 0.7189, Acc: 0.6885] | MSE [Dist: 0.0180, Cls: 3.2156, Acc: 0.1404] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 18 | MSE [Dist: 0.0220, Cls: 0.7176, Acc: 0.6905] | MSE [Dist: 0.0179, Cls: 3.2257, Acc: 0.1478] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 19 | MSE [Dist: 0.0220, Cls: 0.7133, Acc: 0.6884] | MSE [Dist: 0.0179, Cls: 3.1853, Acc: 0.1262] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 20 | MSE [Dist: 0.0221, Cls: 0.7135, Acc: 0.6893] | MSE [Dist: 0.0180, Cls: 3.1993, Acc: 0.1467] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0020.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0020.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0020.png
+Epoch [21/80] Batch [60/937] Loss: 0.0184 Distortion: 0.0184 Classification: 3.0246
+Epoch [21/80] Batch [160/937] Loss: 0.0184 Distortion: 0.0184 Classification: 3.1892
+Epoch [21/80] Batch [260/937] Loss: 0.0188 Distortion: 0.0188 Classification: 3.4428
+Epoch [21/80] Batch [360/937] Loss: 0.0188 Distortion: 0.0188 Classification: 3.1902
+Epoch [21/80] Batch [460/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.0495
+Epoch [21/80] Batch [560/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.3042
+Epoch [21/80] Batch [660/937] Loss: 0.0193 Distortion: 0.0193 Classification: 3.7025
+Epoch [21/80] Batch [760/937] Loss: 0.0192 Distortion: 0.0192 Classification: 2.6245
+Epoch [21/80] Batch [860/937] Loss: 0.0182 Distortion: 0.0182 Classification: 2.7113
+Epoch: 21 | MSE [Dist: 0.0220, Cls: 0.7117, Acc: 0.6902] | MSE [Dist: 0.0179, Cls: 3.2353, Acc: 0.1370] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 22 | MSE [Dist: 0.0220, Cls: 0.7145, Acc: 0.6910] | MSE [Dist: 0.0178, Cls: 3.2272, Acc: 0.1430] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 23 | MSE [Dist: 0.0220, Cls: 0.7140, Acc: 0.6886] | MSE [Dist: 0.0178, Cls: 3.1221, Acc: 0.1508] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 24 | MSE [Dist: 0.0221, Cls: 0.7097, Acc: 0.6914] | MSE [Dist: 0.0179, Cls: 3.1887, Acc: 0.1514] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 25 | MSE [Dist: 0.0220, Cls: 0.7121, Acc: 0.6914] | MSE [Dist: 0.0179, Cls: 3.1723, Acc: 0.1523] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0025.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0025.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0025.png
+Epoch [26/80] Batch [75/937] Loss: 0.0168 Distortion: 0.0168 Classification: 3.3505
+Epoch [26/80] Batch [175/937] Loss: 0.0168 Distortion: 0.0168 Classification: 3.2924
+Epoch [26/80] Batch [275/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.2869
+Epoch [26/80] Batch [375/937] Loss: 0.0183 Distortion: 0.0183 Classification: 3.1274
+Epoch [26/80] Batch [475/937] Loss: 0.0164 Distortion: 0.0164 Classification: 3.4520
+Epoch [26/80] Batch [575/937] Loss: 0.0182 Distortion: 0.0182 Classification: 3.2316
+Epoch [26/80] Batch [675/937] Loss: 0.0190 Distortion: 0.0190 Classification: 2.9955
+Epoch [26/80] Batch [775/937] Loss: 0.0167 Distortion: 0.0167 Classification: 3.2223
+Epoch [26/80] Batch [875/937] Loss: 0.0188 Distortion: 0.0188 Classification: 3.0719
+Epoch: 26 | MSE [Dist: 0.0220, Cls: 0.7067, Acc: 0.6891] | MSE [Dist: 0.0179, Cls: 3.1597, Acc: 0.1459] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 27 | MSE [Dist: 0.0220, Cls: 0.7158, Acc: 0.6886] | MSE [Dist: 0.0179, Cls: 3.2065, Acc: 0.1352] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 28 | MSE [Dist: 0.0220, Cls: 0.7114, Acc: 0.6902] | MSE [Dist: 0.0178, Cls: 3.1935, Acc: 0.1508] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 29 | MSE [Dist: 0.0220, Cls: 0.7095, Acc: 0.6926] | MSE [Dist: 0.0178, Cls: 3.2892, Acc: 0.1558] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 30 | MSE [Dist: 0.0220, Cls: 0.7097, Acc: 0.6908] | MSE [Dist: 0.0179, Cls: 3.2659, Acc: 0.1489] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0030.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0030.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0030.png
+Epoch [31/80] Batch [90/937] Loss: 0.0175 Distortion: 0.0175 Classification: 3.0057
+Epoch [31/80] Batch [190/937] Loss: 0.0189 Distortion: 0.0189 Classification: 3.0660
+Epoch [31/80] Batch [290/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.3985
+Epoch [31/80] Batch [390/937] Loss: 0.0181 Distortion: 0.0181 Classification: 3.1723
+Epoch [31/80] Batch [490/937] Loss: 0.0192 Distortion: 0.0192 Classification: 3.1924
+Epoch [31/80] Batch [590/937] Loss: 0.0182 Distortion: 0.0182 Classification: 3.2654
+Epoch [31/80] Batch [690/937] Loss: 0.0174 Distortion: 0.0174 Classification: 2.9434
+Epoch [31/80] Batch [790/937] Loss: 0.0172 Distortion: 0.0172 Classification: 3.3020
+Epoch [31/80] Batch [890/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.0796
+Epoch: 31 | MSE [Dist: 0.0221, Cls: 0.7137, Acc: 0.6873] | MSE [Dist: 0.0180, Cls: 3.0159, Acc: 0.1665] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 32 | MSE [Dist: 0.0220, Cls: 0.7136, Acc: 0.6913] | MSE [Dist: 0.0178, Cls: 3.0591, Acc: 0.1636] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 33 | MSE [Dist: 0.0220, Cls: 0.7101, Acc: 0.6944] | MSE [Dist: 0.0179, Cls: 3.1086, Acc: 0.1613] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 34 | MSE [Dist: 0.0220, Cls: 0.7167, Acc: 0.6908] | MSE [Dist: 0.0178, Cls: 3.1400, Acc: 0.1604] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 35 | MSE [Dist: 0.0221, Cls: 0.7152, Acc: 0.6870] | MSE [Dist: 0.0179, Cls: 3.2549, Acc: 0.1731] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0035.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0035.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0035.png
+Epoch [36/80] Batch [5/937] Loss: 0.0196 Distortion: 0.0196 Classification: 3.2845
+Epoch [36/80] Batch [105/937] Loss: 0.0171 Distortion: 0.0171 Classification: 3.2969
+Epoch [36/80] Batch [205/937] Loss: 0.0183 Distortion: 0.0183 Classification: 2.9200
+Epoch [36/80] Batch [305/937] Loss: 0.0193 Distortion: 0.0193 Classification: 2.8468
+Epoch [36/80] Batch [405/937] Loss: 0.0194 Distortion: 0.0194 Classification: 3.3308
+Epoch [36/80] Batch [505/937] Loss: 0.0161 Distortion: 0.0161 Classification: 3.4700
+Epoch [36/80] Batch [605/937] Loss: 0.0167 Distortion: 0.0167 Classification: 3.3459
+Epoch [36/80] Batch [705/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.2342
+Epoch [36/80] Batch [805/937] Loss: 0.0176 Distortion: 0.0176 Classification: 2.9782
+Epoch [36/80] Batch [905/937] Loss: 0.0180 Distortion: 0.0180 Classification: 2.9169
+Epoch: 36 | MSE [Dist: 0.0220, Cls: 0.7204, Acc: 0.6882] | MSE [Dist: 0.0179, Cls: 3.1717, Acc: 0.1510] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 37 | MSE [Dist: 0.0221, Cls: 0.7106, Acc: 0.6911] | MSE [Dist: 0.0179, Cls: 3.1342, Acc: 0.1545] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 38 | MSE [Dist: 0.0221, Cls: 0.7122, Acc: 0.6889] | MSE [Dist: 0.0179, Cls: 3.1457, Acc: 0.1607] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 39 | MSE [Dist: 0.0220, Cls: 0.7158, Acc: 0.6885] | MSE [Dist: 0.0178, Cls: 3.1248, Acc: 0.1593] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 40 | MSE [Dist: 0.0220, Cls: 0.7119, Acc: 0.6937] | MSE [Dist: 0.0178, Cls: 3.0800, Acc: 0.1728] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0040.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0040.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0040.png
+Epoch [41/80] Batch [20/937] Loss: 0.0185 Distortion: 0.0185 Classification: 3.5735
+Epoch [41/80] Batch [120/937] Loss: 0.0190 Distortion: 0.0190 Classification: 3.1685
+Epoch [41/80] Batch [220/937] Loss: 0.0184 Distortion: 0.0184 Classification: 3.2915
+Epoch [41/80] Batch [320/937] Loss: 0.0175 Distortion: 0.0175 Classification: 3.3235
+Epoch [41/80] Batch [420/937] Loss: 0.0164 Distortion: 0.0164 Classification: 3.2482
+Epoch [41/80] Batch [520/937] Loss: 0.0179 Distortion: 0.0179 Classification: 2.9184
+Epoch [41/80] Batch [620/937] Loss: 0.0172 Distortion: 0.0172 Classification: 3.2445
+Epoch [41/80] Batch [720/937] Loss: 0.0168 Distortion: 0.0168 Classification: 3.2705
+Epoch [41/80] Batch [820/937] Loss: 0.0172 Distortion: 0.0172 Classification: 3.0906
+Epoch [41/80] Batch [920/937] Loss: 0.0176 Distortion: 0.0176 Classification: 2.8903
+Epoch: 41 | MSE [Dist: 0.0220, Cls: 0.7120, Acc: 0.6907] | MSE [Dist: 0.0178, Cls: 3.1946, Acc: 0.1509] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 42 | MSE [Dist: 0.0220, Cls: 0.7141, Acc: 0.6897] | MSE [Dist: 0.0178, Cls: 3.1667, Acc: 0.1550] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 43 | MSE [Dist: 0.0220, Cls: 0.7132, Acc: 0.6886] | MSE [Dist: 0.0178, Cls: 3.0552, Acc: 0.1519] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 44 | MSE [Dist: 0.0220, Cls: 0.7123, Acc: 0.6895] | MSE [Dist: 0.0178, Cls: 3.1657, Acc: 0.1367] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 45 | MSE [Dist: 0.0220, Cls: 0.7225, Acc: 0.6876] | MSE [Dist: 0.0178, Cls: 3.1506, Acc: 0.1665] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0045.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0045.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0045.png
+Epoch [46/80] Batch [35/937] Loss: 0.0188 Distortion: 0.0188 Classification: 3.2647
+Epoch [46/80] Batch [135/937] Loss: 0.0181 Distortion: 0.0181 Classification: 3.3109
+Epoch [46/80] Batch [235/937] Loss: 0.0175 Distortion: 0.0175 Classification: 3.0154
+Epoch [46/80] Batch [335/937] Loss: 0.0175 Distortion: 0.0175 Classification: 3.1576
+Epoch [46/80] Batch [435/937] Loss: 0.0175 Distortion: 0.0175 Classification: 3.2014
+Epoch [46/80] Batch [535/937] Loss: 0.0172 Distortion: 0.0172 Classification: 3.7850
+Epoch [46/80] Batch [635/937] Loss: 0.0172 Distortion: 0.0172 Classification: 3.0673
+Epoch [46/80] Batch [735/937] Loss: 0.0192 Distortion: 0.0192 Classification: 3.3819
+Epoch [46/80] Batch [835/937] Loss: 0.0196 Distortion: 0.0196 Classification: 2.9146
+Epoch [46/80] Batch [935/937] Loss: 0.0175 Distortion: 0.0175 Classification: 2.7269
+Epoch: 46 | MSE [Dist: 0.0220, Cls: 0.7132, Acc: 0.6901] | MSE [Dist: 0.0178, Cls: 3.1131, Acc: 0.1752] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 47 | MSE [Dist: 0.0220, Cls: 0.7145, Acc: 0.6916] | MSE [Dist: 0.0178, Cls: 3.1977, Acc: 0.1795] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 48 | MSE [Dist: 0.0220, Cls: 0.7148, Acc: 0.6877] | MSE [Dist: 0.0178, Cls: 3.1340, Acc: 0.1532] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 49 | MSE [Dist: 0.0221, Cls: 0.7180, Acc: 0.6877] | MSE [Dist: 0.0179, Cls: 3.1017, Acc: 0.1467] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 50 | MSE [Dist: 0.0221, Cls: 0.7153, Acc: 0.6894] | MSE [Dist: 0.0178, Cls: 3.0821, Acc: 0.1610] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0050.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0050.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0050.png
+Epoch [51/80] Batch [50/937] Loss: 0.0172 Distortion: 0.0172 Classification: 3.0670
+Epoch [51/80] Batch [150/937] Loss: 0.0182 Distortion: 0.0182 Classification: 2.7194
+Epoch [51/80] Batch [250/937] Loss: 0.0180 Distortion: 0.0180 Classification: 2.9640
+Epoch [51/80] Batch [350/937] Loss: 0.0172 Distortion: 0.0172 Classification: 3.4269
+Epoch [51/80] Batch [450/937] Loss: 0.0178 Distortion: 0.0178 Classification: 3.1099
+Epoch [51/80] Batch [550/937] Loss: 0.0181 Distortion: 0.0181 Classification: 3.0916
+Epoch [51/80] Batch [650/937] Loss: 0.0173 Distortion: 0.0173 Classification: 3.3447
+Epoch [51/80] Batch [750/937] Loss: 0.0171 Distortion: 0.0171 Classification: 3.1468
+Epoch [51/80] Batch [850/937] Loss: 0.0178 Distortion: 0.0178 Classification: 2.9545
+Epoch: 51 | MSE [Dist: 0.0220, Cls: 0.7072, Acc: 0.6900] | MSE [Dist: 0.0178, Cls: 3.1485, Acc: 0.1570] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 52 | MSE [Dist: 0.0220, Cls: 0.7123, Acc: 0.6930] | MSE [Dist: 0.0178, Cls: 3.1498, Acc: 0.1532] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 53 | MSE [Dist: 0.0221, Cls: 0.7139, Acc: 0.6914] | MSE [Dist: 0.0178, Cls: 3.1175, Acc: 0.1481] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 54 | MSE [Dist: 0.0221, Cls: 0.7116, Acc: 0.6896] | MSE [Dist: 0.0179, Cls: 3.1440, Acc: 0.1627] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 55 | MSE [Dist: 0.0220, Cls: 0.7183, Acc: 0.6917] | MSE [Dist: 0.0178, Cls: 3.1016, Acc: 0.1701] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0055.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0055.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0055.png
+Epoch [56/80] Batch [65/937] Loss: 0.0172 Distortion: 0.0172 Classification: 3.3540
+Epoch [56/80] Batch [165/937] Loss: 0.0179 Distortion: 0.0179 Classification: 3.5564
+Epoch [56/80] Batch [265/937] Loss: 0.0181 Distortion: 0.0181 Classification: 3.2400
+Epoch [56/80] Batch [365/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.1656
+Epoch [56/80] Batch [465/937] Loss: 0.0178 Distortion: 0.0178 Classification: 3.1658
+Epoch [56/80] Batch [565/937] Loss: 0.0179 Distortion: 0.0179 Classification: 3.0004
+Epoch [56/80] Batch [665/937] Loss: 0.0183 Distortion: 0.0183 Classification: 3.1297
+Epoch [56/80] Batch [765/937] Loss: 0.0181 Distortion: 0.0181 Classification: 3.3609
+Epoch [56/80] Batch [865/937] Loss: 0.0199 Distortion: 0.0199 Classification: 2.8668
+Epoch: 56 | MSE [Dist: 0.0220, Cls: 0.7108, Acc: 0.6894] | MSE [Dist: 0.0178, Cls: 3.0348, Acc: 0.1682] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 57 | MSE [Dist: 0.0220, Cls: 0.7116, Acc: 0.6889] | MSE [Dist: 0.0178, Cls: 3.1458, Acc: 0.1573] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 58 | MSE [Dist: 0.0220, Cls: 0.7071, Acc: 0.6908] | MSE [Dist: 0.0178, Cls: 3.1561, Acc: 0.1643] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 59 | MSE [Dist: 0.0220, Cls: 0.7176, Acc: 0.6881] | MSE [Dist: 0.0178, Cls: 3.1254, Acc: 0.1600] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 60 | MSE [Dist: 0.0220, Cls: 0.7210, Acc: 0.6871] | MSE [Dist: 0.0178, Cls: 3.1012, Acc: 0.1650] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0060.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0060.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0060.png
+Epoch [61/80] Batch [80/937] Loss: 0.0170 Distortion: 0.0170 Classification: 3.0277
+Epoch [61/80] Batch [180/937] Loss: 0.0180 Distortion: 0.0180 Classification: 2.9949
+Epoch [61/80] Batch [280/937] Loss: 0.0171 Distortion: 0.0171 Classification: 3.0544
+Epoch [61/80] Batch [380/937] Loss: 0.0171 Distortion: 0.0171 Classification: 3.5160
+Epoch [61/80] Batch [480/937] Loss: 0.0175 Distortion: 0.0175 Classification: 2.9742
+Epoch [61/80] Batch [580/937] Loss: 0.0184 Distortion: 0.0184 Classification: 3.0588
+Epoch [61/80] Batch [680/937] Loss: 0.0182 Distortion: 0.0182 Classification: 3.5188
+Epoch [61/80] Batch [780/937] Loss: 0.0176 Distortion: 0.0176 Classification: 3.1531
+Epoch [61/80] Batch [880/937] Loss: 0.0183 Distortion: 0.0183 Classification: 3.2418
+Epoch: 61 | MSE [Dist: 0.0220, Cls: 0.7208, Acc: 0.6877] | MSE [Dist: 0.0178, Cls: 3.1230, Acc: 0.1544] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 62 | MSE [Dist: 0.0220, Cls: 0.7211, Acc: 0.6885] | MSE [Dist: 0.0178, Cls: 3.1435, Acc: 0.1699] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 63 | MSE [Dist: 0.0220, Cls: 0.7132, Acc: 0.6900] | MSE [Dist: 0.0178, Cls: 3.0468, Acc: 0.1643] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 64 | MSE [Dist: 0.0220, Cls: 0.7144, Acc: 0.6861] | MSE [Dist: 0.0178, Cls: 2.9994, Acc: 0.1724] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 65 | MSE [Dist: 0.0220, Cls: 0.7152, Acc: 0.6916] | MSE [Dist: 0.0178, Cls: 3.0298, Acc: 0.1710] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0065.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0065.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0065.png
+Epoch [66/80] Batch [95/937] Loss: 0.0184 Distortion: 0.0184 Classification: 2.9943
+Epoch [66/80] Batch [195/937] Loss: 0.0175 Distortion: 0.0175 Classification: 3.2387
+Epoch [66/80] Batch [295/937] Loss: 0.0171 Distortion: 0.0171 Classification: 3.4046
+Epoch [66/80] Batch [395/937] Loss: 0.0182 Distortion: 0.0182 Classification: 3.4478
+Epoch [66/80] Batch [495/937] Loss: 0.0166 Distortion: 0.0166 Classification: 3.2078
+Epoch [66/80] Batch [595/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.2312
+Epoch [66/80] Batch [695/937] Loss: 0.0170 Distortion: 0.0170 Classification: 3.5257
+Epoch [66/80] Batch [795/937] Loss: 0.0180 Distortion: 0.0180 Classification: 2.9085
+Epoch [66/80] Batch [895/937] Loss: 0.0191 Distortion: 0.0191 Classification: 3.1281
+Epoch: 66 | MSE [Dist: 0.0220, Cls: 0.7203, Acc: 0.6903] | MSE [Dist: 0.0178, Cls: 3.1359, Acc: 0.1540] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 67 | MSE [Dist: 0.0221, Cls: 0.7164, Acc: 0.6884] | MSE [Dist: 0.0178, Cls: 3.1749, Acc: 0.1719] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 68 | MSE [Dist: 0.0220, Cls: 0.7147, Acc: 0.6909] | MSE [Dist: 0.0178, Cls: 3.0659, Acc: 0.1773] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 69 | MSE [Dist: 0.0221, Cls: 0.7121, Acc: 0.6911] | MSE [Dist: 0.0178, Cls: 3.0647, Acc: 0.1647] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 70 | MSE [Dist: 0.0220, Cls: 0.7072, Acc: 0.6920] | MSE [Dist: 0.0178, Cls: 3.0995, Acc: 0.1622] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0070.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0070.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0070.png
+Epoch [71/80] Batch [10/937] Loss: 0.0188 Distortion: 0.0188 Classification: 3.1173
+Epoch [71/80] Batch [110/937] Loss: 0.0182 Distortion: 0.0182 Classification: 3.0195
+Epoch [71/80] Batch [210/937] Loss: 0.0170 Distortion: 0.0170 Classification: 3.0585
+Epoch [71/80] Batch [310/937] Loss: 0.0181 Distortion: 0.0181 Classification: 3.2642
+Epoch [71/80] Batch [410/937] Loss: 0.0183 Distortion: 0.0183 Classification: 3.4118
+Epoch [71/80] Batch [510/937] Loss: 0.0167 Distortion: 0.0167 Classification: 3.5320
+Epoch [71/80] Batch [610/937] Loss: 0.0188 Distortion: 0.0188 Classification: 2.7700
+Epoch [71/80] Batch [710/937] Loss: 0.0185 Distortion: 0.0185 Classification: 3.0252
+Epoch [71/80] Batch [810/937] Loss: 0.0173 Distortion: 0.0173 Classification: 2.9739
+Epoch [71/80] Batch [910/937] Loss: 0.0184 Distortion: 0.0184 Classification: 2.8697
+Epoch: 71 | MSE [Dist: 0.0220, Cls: 0.7120, Acc: 0.6885] | MSE [Dist: 0.0178, Cls: 3.0897, Acc: 0.1654] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 72 | MSE [Dist: 0.0221, Cls: 0.7085, Acc: 0.6928] | MSE [Dist: 0.0178, Cls: 3.0512, Acc: 0.1611] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 73 | MSE [Dist: 0.0221, Cls: 0.7205, Acc: 0.6874] | MSE [Dist: 0.0178, Cls: 3.0907, Acc: 0.1832] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 74 | MSE [Dist: 0.0220, Cls: 0.7124, Acc: 0.6894] | MSE [Dist: 0.0178, Cls: 3.1821, Acc: 0.1737] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 75 | MSE [Dist: 0.0220, Cls: 0.7146, Acc: 0.6909] | MSE [Dist: 0.0178, Cls: 3.0738, Acc: 0.1623] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0075.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0075.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0075.png
+Epoch [76/80] Batch [25/937] Loss: 0.0174 Distortion: 0.0174 Classification: 2.8484
+Epoch [76/80] Batch [125/937] Loss: 0.0172 Distortion: 0.0172 Classification: 2.4848
+Epoch [76/80] Batch [225/937] Loss: 0.0176 Distortion: 0.0176 Classification: 2.9257
+Epoch [76/80] Batch [325/937] Loss: 0.0179 Distortion: 0.0179 Classification: 3.4979
+Epoch [76/80] Batch [425/937] Loss: 0.0193 Distortion: 0.0193 Classification: 2.8913
+Epoch [76/80] Batch [525/937] Loss: 0.0172 Distortion: 0.0172 Classification: 3.1916
+Epoch [76/80] Batch [625/937] Loss: 0.0177 Distortion: 0.0177 Classification: 3.2026
+Epoch [76/80] Batch [725/937] Loss: 0.0176 Distortion: 0.0176 Classification: 3.1828
+Epoch [76/80] Batch [825/937] Loss: 0.0186 Distortion: 0.0186 Classification: 3.0400
+Epoch [76/80] Batch [925/937] Loss: 0.0190 Distortion: 0.0190 Classification: 3.5450
+Epoch: 76 | MSE [Dist: 0.0220, Cls: 0.7125, Acc: 0.6899] | MSE [Dist: 0.0178, Cls: 3.0738, Acc: 0.1686] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 77 | MSE [Dist: 0.0220, Cls: 0.7148, Acc: 0.6900] | MSE [Dist: 0.0178, Cls: 3.0948, Acc: 0.1684] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 78 | MSE [Dist: 0.0221, Cls: 0.7095, Acc: 0.6902] | MSE [Dist: 0.0178, Cls: 3.1520, Acc: 0.1466] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 79 | MSE [Dist: 0.0221, Cls: 0.7099, Acc: 0.6888] | MSE [Dist: 0.0178, Cls: 3.0391, Acc: 0.1755] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Epoch: 80 | MSE [Dist: 0.0220, Cls: 0.7146, Acc: 0.6892] | MSE [Dist: 0.0177, Cls: 3.0833, Acc: 0.1763] | Lambda_MSE: 1.0 Lambda_CLS: 0.0
+Saved reconstruction preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/recon_epoch_0080.png
+Image size: 64 x 64
+Saved pixel-value preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/pixel_epoch_0080.png
+Image size: 64 x 64
+Saved reconstructed pixel preview: ./saved_models/compressed/Iframe_z_dim_4_L_2/Universal_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.0_Iframe_pretrained/recons/preview_reconstructed_epoch_0080.png
+Step 1 complete: ./saved_models/compressed/Iframe_z_dim__L_/Universal_dim_128_z_dim_2_L_2_single_bit_False_bs_64_lambdaMSE_1.0_lambdaCLS_0.0
+Results saved in: ./saved_models/compressed/Iframe_z_dim__L_/
+Lambda CLS: 0.0
+Finished at Tue Sep 22 17:50:14 CDT 2026
+============================================

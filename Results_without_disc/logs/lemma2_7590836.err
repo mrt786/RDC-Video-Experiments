@@ -1,0 +1,20 @@
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) arch/avx2     2) gcc/13.2.0
+
+Traceback (most recent call last):
+  File "/home/tariq1/projects/Experiments3/train_universal.py", line 1133, in <module>
+    main()
+  File "/home/tariq1/projects/Experiments3/train_universal.py", line 1004, in main
+    ssf.motion_encoder.load_state_dict(torch.load(pre_path + '/m_enc.pth'))
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tariq1/envs/lemma2_env/lib/python3.11/site-packages/torch/serialization.py", line 997, in load
+    with _open_file_like(f, 'rb') as opened_file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tariq1/envs/lemma2_env/lib/python3.11/site-packages/torch/serialization.py", line 444, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tariq1/envs/lemma2_env/lib/python3.11/site-packages/torch/serialization.py", line 425, in __init__
+    super().__init__(open(name, mode))
+                     ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: './saved_models/compressed/Iframe_z_dim_4_L_2/Pframe_dim_128_z_dim_2_L_2_bs_64_lambdaMSE_1.0_lambdaCLS_0.01_Iframe_pretrained/m_enc.pth'
