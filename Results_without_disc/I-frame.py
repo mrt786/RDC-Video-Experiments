@@ -24,7 +24,6 @@ parser.add_argument('--bs', type=int, default=64, help='size of the batch')
 parser.add_argument('--dim', type=int, default=128, help='latent dimension')
 parser.add_argument('--z_dim', type=int, default=4, help='z dim')
 parser.add_argument('--L', type=int, default=16, help='quantization levels')
-parser.add_argument('--skip_fq', type=int, default=5, help='loop frequency for generator update')
 parser.add_argument('--lambda_MSE', type=float, default=1.0, help='Distortion loss weight')
 parser.add_argument('--lambda_cls', type=float, default=0.0, help='Classification loss weight')
 parser.add_argument('--path', type=str, default='./data/', help='Data Path')
@@ -122,119 +121,396 @@ def set_opt_zero(opts):
 
         
         
-def preview_reconstructed(
-    x_ref_recon,
-    labels,
+# def preview_reconstructed(
+#     x_ref_recon,
+#     labels,
+#     out_dir,
+#     epoch
+# ):
+#     """
+#     Save a PNG preview showing pixel values of ONLY x_ref_recon[0].
+
+#     The reconstructed I-frame is converted from [0,1]
+#     to integer pixel values [0,255].
+#     """
+
+#     # ---------------------------------------------------------
+#     # Use ONLY the zeroth reconstructed image
+#     # ---------------------------------------------------------
+#     img = x_ref_recon[0]
+
+#     # ---------------------------------------------------------
+#     # Image size
+#     # ---------------------------------------------------------
+#     height, width = img.shape[-2:]
+
+#     print(f"Image size: {height} x {width}")
+
+#     # ---------------------------------------------------------
+#     # Convert [1,H,W] -> [H,W]
+#     # ---------------------------------------------------------
+#     img = (
+#         img.detach()
+#         .cpu()
+#         .squeeze()
+#         .numpy()
+#     )
+
+#     # ---------------------------------------------------------
+#     # Convert [0,1] -> integer [0,255]
+#     # ---------------------------------------------------------
+#     pixel_values = np.clip(
+#         np.round(img * 255),
+#         0,
+#         255
+#     ).astype(np.uint8)
+
+#     # ---------------------------------------------------------
+#     # Create figure
+#     # ---------------------------------------------------------
+#     fig, ax = plt.subplots(
+#         figsize=(8, 8)
+#     )
+
+#     # ---------------------------------------------------------
+#     # Display reconstructed image
+#     # ---------------------------------------------------------
+#     ax.imshow(
+#         pixel_values,
+#         cmap='gray',
+#         vmin=0,
+#         vmax=255
+#     )
+
+#     ax.axis('off')
+
+#     # ---------------------------------------------------------
+#     # Write pixel values
+#     # ---------------------------------------------------------
+#     for row in range(height):
+#         for col in range(width):
+
+#             value = pixel_values[row, col]
+
+#             text_color = (
+#                 'white'
+#                 if value < 128
+#                 else 'black'
+#             )
+
+#             ax.text(
+#                 col,
+#                 row,
+#                 str(value),
+#                 ha='center',
+#                 va='center',
+#                 fontsize=5,
+#                 color=text_color
+#             )
+
+#     # ---------------------------------------------------------
+#     # Digit label
+#     # ---------------------------------------------------------
+#     digit_label = labels[0].item()
+
+#     ax.set_title(
+#         f"Frame 1 (I-frame Recon) | Digit {digit_label}",
+#         fontsize=12
+#     )
+
+#     # ---------------------------------------------------------
+#     # Figure title
+#     # ---------------------------------------------------------
+#     fig.suptitle(
+#         f"Epoch {epoch + 1} | "
+#         f"Reconstructed I-frame Pixel Values | "
+#         f"Image Size = {width}×{height} | ",
+#         fontsize=13,
+#         weight='bold'
+#     )
+
+#     plt.tight_layout()
+
+#     # ---------------------------------------------------------
+#     # Save
+#     # ---------------------------------------------------------
+#     os.makedirs(
+#         out_dir,
+#         exist_ok=True
+#     )
+
+#     path = os.path.join(
+#         out_dir,
+#         f"preview_reconstructed_epoch_{epoch + 1:04d}.png"
+#     )
+
+#     plt.savefig(
+#         path,
+#         dpi=150,
+#         bbox_inches='tight'
+#     )
+
+#     plt.close(fig)
+
+#     print(
+#         f"Saved reconstructed pixel preview: {path}"
+#     )
+
+
+
+# def save_pixel_value_preview_iframe(
+#     x1,
+#     x1_hat,
+#     labels,
+#     out_dir,
+#     epoch,
+#     lambda_cls
+# ):
+#     """
+#     Save pixel values for one or more I-frame source/reconstruction pairs.
+
+#     x1:
+#         Original I-frame, shape [B, C, H, W]
+
+#     x1_hat:
+#         Reconstructed I-frame, shape [B, C, H, W]
+
+#     labels:
+#         MNIST labels, shape [B]
+#     """
+
+#     n = x1.size(0)
+
+#     # ---------------------------------------------------------
+#     # Image size
+#     # ---------------------------------------------------------
+#     height, width = x1.shape[-2:]
+
+#     print(f"Image size: {height} x {width}")
+
+#     # ---------------------------------------------------------
+#     # Create figure
+#     # ---------------------------------------------------------
+#     fig, axes = plt.subplots(
+#         n,
+#         2,
+#         figsize=(10, 4 * n)
+#     )
+
+#     # Important: when n == 1, axes is 1-dimensional
+#     if n == 1:
+#         axes = np.expand_dims(axes, axis=0)
+
+#     col_titles = [
+#         'Frame 1\n(Source)',
+#         'Frame 1\n(I-frame Recon)'
+#     ]
+
+#     for col_idx, title in enumerate(col_titles):
+#         axes[0, col_idx].set_title(
+#             title,
+#             fontsize=11
+#         )
+
+#     # ---------------------------------------------------------
+#     # Draw source + reconstruction
+#     # ---------------------------------------------------------
+#     for idx in range(n):
+
+#         digit_label = labels[idx].item()
+
+#         imgs = [
+#             x1[idx],
+#             x1_hat[idx]
+#         ]
+
+#         for col_idx, img in enumerate(imgs):
+
+#             # [1,H,W] -> [H,W]
+#             img = img.detach().cpu().squeeze().numpy()
+
+#             # [0,1] -> [0,255]
+#             pixel_values = np.clip(
+#                 np.round(img * 255),
+#                 0,
+#                 255
+#             ).astype(np.uint8)
+
+#             axes[idx, col_idx].imshow(
+#                 pixel_values,
+#                 cmap='gray',
+#                 vmin=0,
+#                 vmax=255
+#             )
+
+#             axes[idx, col_idx].axis('off')
+
+#             # -------------------------------------------------
+#             # Write pixel values
+#             # -------------------------------------------------
+#             for row in range(height):
+#                 for col in range(width):
+
+#                     value = pixel_values[row, col]
+
+#                     text_color = (
+#                         'white'
+#                         if value < 128
+#                         else 'black'
+#                     )
+
+#                     axes[idx, col_idx].text(
+#                         col,
+#                         row,
+#                         str(value),
+#                         ha='center',
+#                         va='center',
+#                         fontsize=5,
+#                         color=text_color
+#                     )
+
+#         axes[idx, 0].set_ylabel(
+#             f"Digit {digit_label}",
+#             fontsize=11,
+#             rotation=0,
+#             labelpad=50,
+#             va='center'
+#         )
+
+#     # ---------------------------------------------------------
+#     # Title
+#     # ---------------------------------------------------------
+#     fig.suptitle(
+#         f"Epoch {epoch + 1} | "
+#         f"I-frame Pixel Values | "
+#         f"Image Size = {width}×{height} | "
+#         f"Lambda_Cls = {lambda_cls}",
+#         fontsize=13,
+#         weight='bold'
+#     )
+
+#     plt.tight_layout()
+
+#     # ---------------------------------------------------------
+#     # Save
+#     # ---------------------------------------------------------
+#     os.makedirs(out_dir, exist_ok=True)
+
+#     path = os.path.join(
+#         out_dir,
+#         f"pixel_epoch_{epoch + 1:04d}.png"
+#     )
+
+#     plt.savefig(
+#         path,
+#         dpi=150,
+#         bbox_inches='tight'
+#     )
+
+#     plt.close(fig)
+
+#     print(f"Saved pixel-value preview: {path}")
+    
+    
+#     preview_reconstructed(
+#         x_ref_recon=x1_hat,
+#         labels=labels,
+#         out_dir=out_dir,
+#         epoch=epoch,
+#     )
+
+    
+
+
+def save_recon_preview_iframe(
+    encoder,
+    decoder,
+    vis_batch,
+    device,
     out_dir,
-    epoch
+    epoch,
+    lambda_cls,
+    num_show=4
 ):
-    """
-    Save a PNG preview showing pixel values of ONLY x_ref_recon[0].
+    """Save a PNG grid: source x1 | reconstructed x1_hat."""
 
-    The reconstructed I-frame is converted from [0,1]
-    to integer pixel values [0,255].
-    """
+    was_training_encoder = encoder.training
+    was_training_decoder = decoder.training
 
-    # ---------------------------------------------------------
-    # Use ONLY the zeroth reconstructed image
-    # ---------------------------------------------------------
-    img = x_ref_recon[0]
+    encoder.eval()
+    decoder.eval()
 
-    # ---------------------------------------------------------
-    # Image size
-    # ---------------------------------------------------------
-    height, width = img.shape[-2:]
+    x, y = vis_batch
 
-    print(f"Image size: {height} x {width}")
+    x = x.permute(0, 4, 1, 2, 3).to(device).float()
+    y = y.to(device)
 
-    # ---------------------------------------------------------
-    # Convert [1,H,W] -> [H,W]
-    # ---------------------------------------------------------
-    img = (
-        img.detach()
-        .cpu()
-        .squeeze()
-        .numpy()
+    x1 = x[:, :, 0, ...]
+
+    with torch.no_grad():
+
+        hx = encoder(x1)
+        x1_hat = decoder(hx[0])
+
+    n = min(num_show, x.size(0))
+
+    fig, axes = plt.subplots(
+        n,
+        2,
+        figsize=(9, 3 * n)
     )
 
-    # ---------------------------------------------------------
-    # Convert [0,1] -> integer [0,255]
-    # ---------------------------------------------------------
-    pixel_values = np.clip(
-        np.round(img * 255),
-        0,
-        255
-    ).astype(np.uint8)
+    if n == 1:
+        axes = np.expand_dims(
+            axes,
+            axis=0
+        )
 
-    # ---------------------------------------------------------
-    # Create figure
-    # ---------------------------------------------------------
-    fig, ax = plt.subplots(
-        figsize=(8, 8)
-    )
+    # col_titles = [
+    #     'Frame 1\n(Source)',
+    #     'Frame 1\n(Recon)'
+    # ]
 
-    # ---------------------------------------------------------
-    # Display reconstructed image
-    # ---------------------------------------------------------
-    ax.imshow(
-        pixel_values,
-        cmap='gray',
-        vmin=0,
-        vmax=255
-    )
+    # for col_idx, title in enumerate(col_titles):
 
-    ax.axis('off')
+    #     axes[0, col_idx].set_title(
+    #         title,
+    #         fontsize=10
+    #     )
 
-    # ---------------------------------------------------------
-    # Write pixel values
-    # ---------------------------------------------------------
-    for row in range(height):
-        for col in range(width):
+    for idx in range(n):
 
-            value = pixel_values[row, col]
+        digit_label = y[idx].item()
+        imgs = [x1[idx], x1_hat[idx]]
 
-            text_color = (
-                'white'
-                if value < 128
-                else 'black'
+        for col_idx, img in enumerate(imgs):
+
+            axes[idx, col_idx].imshow(
+                img.detach().cpu().squeeze().numpy(),
+                cmap='gray',
+                vmin=0,
+                vmax=1
             )
 
-            ax.text(
-                col,
-                row,
-                str(value),
-                ha='center',
-                va='center',
-                fontsize=5,
-                color=text_color
-            )
+            axes[idx, col_idx].axis('off')
 
-    # ---------------------------------------------------------
-    # Digit label
-    # ---------------------------------------------------------
-    digit_label = labels[0].item()
+        axes[idx, 0].set_ylabel(
+            f"Digit {digit_label}",
+            fontsize=11,
+            rotation=0,
+            labelpad=50,
+            va='center'
+        )
 
-    ax.set_title(
-        f"Frame 1 (I-frame Recon) | Digit {digit_label}",
-        fontsize=12
-    )
-
-    # ---------------------------------------------------------
-    # Figure title
-    # ---------------------------------------------------------
-    fig.suptitle(
-        f"Epoch {epoch + 1} | "
-        f"Reconstructed I-frame Pixel Values | "
-        f"Image Size = {width}×{height} | ",
-        fontsize=13,
-        weight='bold'
-    )
+    # fig.suptitle(
+    #     f"Epoch {epoch + 1} | "
+    #     f"I-Frame Reconstructions at Lambda_Cls {lambda_cls}",
+    #     fontsize=13,
+    #     weight='bold'
+    # )
 
     plt.tight_layout()
 
-    # ---------------------------------------------------------
-    # Save
-    # ---------------------------------------------------------
     os.makedirs(
         out_dir,
         exist_ok=True
@@ -242,253 +518,30 @@ def preview_reconstructed(
 
     path = os.path.join(
         out_dir,
-        f"preview_reconstructed_epoch_{epoch + 1:04d}.png"
+        f"recon_epoch_{epoch + 1:04d}.png"
     )
 
     plt.savefig(
         path,
-        dpi=150,
+        dpi=120,
         bbox_inches='tight'
     )
 
     plt.close(fig)
 
     print(
-        f"Saved reconstructed pixel preview: {path}"
+        f"Saved reconstruction preview: {path}"
     )
 
+    # save_pixel_value_preview_iframe(
+    #     x1[0:1],
+    #     x1_hat[0:1],
+    #     y[0:1],
+    #     out_dir,
+    #     epoch,
+    #     lambda_cls
+    # )
 
-
-def save_pixel_value_preview_iframe(
-    x1,
-    x1_hat,
-    labels,
-    out_dir,
-    epoch,
-    lambda_cls
-):
-    """
-    Save pixel values for one or more I-frame source/reconstruction pairs.
-
-    x1:
-        Original I-frame, shape [B, C, H, W]
-
-    x1_hat:
-        Reconstructed I-frame, shape [B, C, H, W]
-
-    labels:
-        MNIST labels, shape [B]
-    """
-
-    n = x1.size(0)
-
-    # ---------------------------------------------------------
-    # Image size
-    # ---------------------------------------------------------
-    height, width = x1.shape[-2:]
-
-    print(f"Image size: {height} x {width}")
-
-    # ---------------------------------------------------------
-    # Create figure
-    # ---------------------------------------------------------
-    fig, axes = plt.subplots(
-        n,
-        2,
-        figsize=(10, 4 * n)
-    )
-
-    # Important: when n == 1, axes is 1-dimensional
-    if n == 1:
-        axes = np.expand_dims(axes, axis=0)
-
-    col_titles = [
-        'Frame 1\n(Source)',
-        'Frame 1\n(I-frame Recon)'
-    ]
-
-    for col_idx, title in enumerate(col_titles):
-        axes[0, col_idx].set_title(
-            title,
-            fontsize=11
-        )
-
-    # ---------------------------------------------------------
-    # Draw source + reconstruction
-    # ---------------------------------------------------------
-    for idx in range(n):
-
-        digit_label = labels[idx].item()
-
-        imgs = [
-            x1[idx],
-            x1_hat[idx]
-        ]
-
-        for col_idx, img in enumerate(imgs):
-
-            # [1,H,W] -> [H,W]
-            img = img.detach().cpu().squeeze().numpy()
-
-            # [0,1] -> [0,255]
-            pixel_values = np.clip(
-                np.round(img * 255),
-                0,
-                255
-            ).astype(np.uint8)
-
-            axes[idx, col_idx].imshow(
-                pixel_values,
-                cmap='gray',
-                vmin=0,
-                vmax=255
-            )
-
-            axes[idx, col_idx].axis('off')
-
-            # -------------------------------------------------
-            # Write pixel values
-            # -------------------------------------------------
-            for row in range(height):
-                for col in range(width):
-
-                    value = pixel_values[row, col]
-
-                    text_color = (
-                        'white'
-                        if value < 128
-                        else 'black'
-                    )
-
-                    axes[idx, col_idx].text(
-                        col,
-                        row,
-                        str(value),
-                        ha='center',
-                        va='center',
-                        fontsize=5,
-                        color=text_color
-                    )
-
-        axes[idx, 0].set_ylabel(
-            f"Digit {digit_label}",
-            fontsize=11,
-            rotation=0,
-            labelpad=50,
-            va='center'
-        )
-
-    # ---------------------------------------------------------
-    # Title
-    # ---------------------------------------------------------
-    fig.suptitle(
-        f"Epoch {epoch + 1} | "
-        f"I-frame Pixel Values | "
-        f"Image Size = {width}×{height} | "
-        f"Lambda_Cls = {lambda_cls}",
-        fontsize=13,
-        weight='bold'
-    )
-
-    plt.tight_layout()
-
-    # ---------------------------------------------------------
-    # Save
-    # ---------------------------------------------------------
-    os.makedirs(out_dir, exist_ok=True)
-
-    path = os.path.join(
-        out_dir,
-        f"pixel_epoch_{epoch + 1:04d}.png"
-    )
-
-    plt.savefig(
-        path,
-        dpi=150,
-        bbox_inches='tight'
-    )
-
-    plt.close(fig)
-
-    print(f"Saved pixel-value preview: {path}")
-    
-    
-    preview_reconstructed(
-        x_ref_recon=x1_hat,
-        labels=labels,
-        out_dir=out_dir,
-        epoch=epoch,
-    )
-
-    
-
-
-def save_recon_preview_iframe(encoder, decoder, vis_batch, device, out_dir, epoch, lambda_cls, num_show=3):
-    """Save a PNG grid: source x1 | reconstructed x1_hat."""
-    was_training_encoder = encoder.training
-    was_training_decoder = decoder.training
-
-    encoder.eval()
-    decoder.eval()
-    
-
-    x, y = vis_batch
-    x = x.permute(0, 4, 1, 2, 3).to(device).float()
-    y = y.to(device)
-    x1 = x[:, :, 0, ...]
-
-    with torch.no_grad():
-        hx = encoder(x1)
-        x1_hat = decoder(hx[0])
-
-    n = min(num_show, x.size(0))
-
-    fig, axes = plt.subplots(n, 2, figsize=(9, 3 * n))
-    
-    if n == 1:
-        axes = np.expand_dims(axes, axis=0)
-
-    col_titles = ['Frame 1\n(Source)', 'Frame 1\n(Recon)']
-    for col_idx, title in enumerate(col_titles):
-        axes[0, col_idx].set_title(title, fontsize=10)
-
-    
-    for idx in range(n):
-        digit_label = y[idx].item()
-        imgs = [x1[idx], x1_hat[idx]]
-
-        for col_idx, img in enumerate(imgs):
-            axes[idx, col_idx].imshow(
-                img.detach().cpu().squeeze().numpy(),
-                cmap='gray',
-                vmin=0,
-                vmax=1
-            )
-            axes[idx, col_idx].axis('off')
-
-        axes[idx, 0].set_ylabel(
-            f"Digit {digit_label}",
-            fontsize=11,
-            rotation=0,
-            labelpad=50,
-            va='center'
-        )
-        
-    
-    fig.suptitle(f"Epoch {epoch + 1} | I-Frame Reconstructions at Lambda_Cls {lambda_cls} ", fontsize=13, weight='bold')
-    plt.tight_layout()
-
-    os.makedirs(out_dir, exist_ok=True)
-    path = os.path.join(out_dir, f"recon_epoch_{epoch + 1:04d}.png")
-    plt.savefig(path, dpi=120, bbox_inches='tight')
-    plt.close(fig)
-    print(f"Saved reconstruction preview: {path}")
-    
-    save_pixel_value_preview_iframe(
-        x1[0:1],x1_hat[0:1], y[0:1] , out_dir, epoch, lambda_cls
-    )
-    
-    
     if was_training_encoder:
         encoder.train()
 
@@ -501,7 +554,6 @@ def main():
     dim = args.dim
     z_dim = args.z_dim
     bs = args.bs
-    skip_fq = args.skip_fq
     vis_every = args.vis_every
     total_epochs = args.total_epochs
     lambda_MSE = args.lambda_MSE
@@ -548,7 +600,7 @@ def main():
     )
     print("Settings: ", folder_name)
 
-    save_dir = f'./saved_models/compressed/Iframe_z_dim_{z_dim}_L_{L}/' + folder_name
+    save_dir = f'./saved_models/Iframe_Models/Iframe_z_dim_{z_dim}_L_{L}/' + folder_name
     os.makedirs(save_dir, exist_ok=True)
 
     if pre_path != 'None':
@@ -589,34 +641,33 @@ def main():
             hx = encoder(x1)
             x1_hat = decoder(hx[0])
 
-            if i % skip_fq == 0:
-                distortion_loss = mse(x1_hat, x1)
+            distortion_loss = mse(x1_hat, x1)
 
-                classifier_output = model_classifier(x1_hat)
+            classifier_output = model_classifier(x1_hat)
 
-                classification_loss = cross_entropy_criterion(
-                    classifier_output,
-                    y
-                )
+            classification_loss = cross_entropy_criterion(
+                classifier_output,
+                y
+            )
 
-                loss = (
-                    lambda_MSE * distortion_loss
-                    + lambda_cls * classification_loss
-                )
+            loss = (
+                lambda_MSE * distortion_loss
+                + lambda_cls * classification_loss
+            )
 
-                loss.backward()
+            loss.backward()
 
-                opt_e.step()
-                opt_g.step()
+            opt_e.step()
+            opt_g.step()
 
-                if batches_done % 100 == 0:
-                    print(
-                        f"Epoch [{epoch + 1}/{total_epochs}] "
-                        f"Batch [{i}/{len(train_loader)}] "
-                        f"Loss: {loss.item():.4f} "
-                        f"Distortion: {distortion_loss.item():.4f} "
-                        f"Classification: {classification_loss.item():.4f}"
-                )
+            if batches_done % 100 == 0:
+                print(
+                    f"Epoch [{epoch + 1}/{total_epochs}] "
+                    f"Batch [{i}/{len(train_loader)}] "
+                    f"Loss: {loss.item():.4f} "
+                    f"Distortion: {distortion_loss.item():.4f} "
+                    f"Classification: {classification_loss.item():.4f}"
+            )
             batches_done += 1
             
             
@@ -659,5 +710,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

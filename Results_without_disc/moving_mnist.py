@@ -1,5 +1,8 @@
 import socket
+import glob
+import os
 import numpy as np
+from PIL import Image
 from torchvision import datasets, transforms
 
 class MovingMNIST(object):
@@ -94,3 +97,61 @@ class MovingMNIST(object):
 
         x[x>1] = 1.
         return x, label
+
+
+class kth(object):
+
+    """Data handler for grayscale KTH action-recognition video sequences."""
+
+    def __init__(self, train, data_root, seq_len=20, image_size=64):
+        self.seq_len = seq_len
+        self.image_size = image_size
+        self.channels = 1
+        self.classes = [
+            "boxing",
+            "handclapping",
+            "handwaving",
+            "jogging",
+            "running",
+            "walking",
+        ]
+        self.samples = []
+
+        persons = range(1, 21) if train else range(21, 26)
+        transform = transforms.Compose([
+            transforms.Resize((image_size, image_size)),
+            transforms.ToTensor(),
+        ])
+
+        for label, action in enumerate(self.classes):
+            action_dir = os.path.join(data_root, action)
+            for person in persons:
+                person_dir = os.path.join(action_dir, f"person{person:02d}")
+                for video_dir in sorted(glob.glob(os.path.join(person_dir, "*d4"))):
+                    frame_paths = sorted(
+                        glob.glob(os.path.join(video_dir, "image-*.png"))
+                    )
+                    for start in range(len(frame_paths) - seq_len + 1):
+                        self.samples.append(
+                            (frame_paths[start:start + seq_len], label)
+                        )
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.samples)
+
+    def __getitem__(self, index):
+        frame_paths, label = self.samples[index]
+        frames = []
+
+        for frame_path in frame_paths:
+            with Image.open(frame_path) as frame:
+                frame = self.transform(frame.convert("L"))
+            frames.append(frame.squeeze(0).numpy())
+
+        sequence = np.stack(frames, axis=0)[..., np.newaxis]
+        return sequence.astype(np.float32), label
+
+
+
+

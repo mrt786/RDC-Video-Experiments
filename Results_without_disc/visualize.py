@@ -16,7 +16,7 @@ from PIL import Image
 def get_rate(folder_name):
     z_dim = int(re.search(r"z_dim_(\d+)", folder_name).group(1))
     L = int(re.search(r"_L_(\d+)", folder_name).group(1))
-    return int(math.log2(2 * z_dim * L)), z_dim
+    return 2*z_dim * math.log(L, 2), z_dim
 
 def plot_reconstructed_images():
     
@@ -682,28 +682,24 @@ def plot_rdc_curve_single_rate_multiple_frames(path, title):
 
     updated_folders = {
         "Universal": [],
-        "P-Frame": []
+        "Nframe": []
     }
 
     # ---------------------------------------------------------
     # Separate Universal and P-Frame folders
     # ---------------------------------------------------------
     for folder in list_of_folders:
-
-        # Skip I-frame folders
-        if "Iframe" in folder.split("_")[0]:
-            continue
-
-        elif "Universal" in folder:
+        if "Universal" in folder.split("_")[1]:
             updated_folders["Universal"].append(folder)
-
-        else:
-            updated_folders["P-Frame"].append(folder)
+        elif "Nframe" in folder.split("_")[0]:
+            updated_folders["Nframe"].append(folder) 
 
     # Optional: sort so that Universal/P-Frame lambda values
     # are processed in a consistent order
+    print(updated_folders)
+    # return
     updated_folders["Universal"].sort()
-    updated_folders["P-Frame"].sort()
+    updated_folders["Nframe"].sort()
 
     # ---------------------------------------------------------
     # Get rate from Universal folder
@@ -711,13 +707,13 @@ def plot_rdc_curve_single_rate_multiple_frames(path, title):
     rate, _ = get_rate(updated_folders["Universal"][0])
 
     # ---------------------------------------------------------
-    # Plot Universal and P-Frame
+    # Plot Universal and Nframe
     # ---------------------------------------------------------
     i = 0
 
 
     for p_path, unv_path in zip(
-        updated_folders["P-Frame"],
+        updated_folders["Nframe"],
         updated_folders["Universal"]
     ):
 
@@ -740,7 +736,7 @@ def plot_rdc_curve_single_rate_multiple_frames(path, title):
             + f"/Rate_{float(rate)}0_CLS_{lambda_cls}_performance.csv"
         )
 
-        path_to_pframe_csv = (
+        path_to_Nframe_csv = (
             path_to_folders
             + "/"
             + p_path
@@ -760,70 +756,87 @@ def plot_rdc_curve_single_rate_multiple_frames(path, title):
         df_unv_mean = df_unv.mean()
 
         # -----------------------------------------------------
-        # Read P-Frame CSV
+        # Read Nframe CSV
         # -----------------------------------------------------
-        df_pframe = pd.read_csv(path_to_pframe_csv)
+        df_Nframe = pd.read_csv(path_to_Nframe_csv)
 
-        df_pframe = df_pframe.tail()
+        df_Nframe = df_Nframe.tail()
 
         # Calculate mean
-        df_pframe_mean = df_pframe.mean()
+        df_Nframe_mean = df_Nframe.mean()
 
-        # -----------------------------------------------------
-        # UNIVERSAL
-        #
-        # Frame 1:
-        #     X = Distortion Loss1
-        #     Y = Accuracy1
-        # -----------------------------------------------------
-        axes[0].scatter(
-            df_unv_mean[" Distortion Loss1"],
-            df_unv_mean[" Accuracy1"],
-            marker="o",
-            c="deeppink",
-            s=60,
-            label=f"λ_cls = {lambda_cls}"
-        )
-        axes[0].scatter(
-            df_pframe_mean[" Distortion Loss1"],
-            df_pframe_mean[" Accuracy1"],
-            marker="o",
-            c="deeppink",
-            edgecolors="black",
-            s=80,
-            label=f"λ_cls = {lambda_cls_p}"
-        )
+        # # -----------------------------------------------------
+        # # UNIVERSAL
+        # #
+        # # Frame 1:
+        # #     X = Distortion Loss1
+        # #     Y = Accuracy1
+        # # -----------------------------------------------------
+        # axes[0].scatter(
+        #     df_unv_mean[" Distortion Loss1"],
+        #     df_unv_mean[" Accuracy1"],
+        #     marker="o",
+        #     c="deeppink",
+        #     s=60,
+        #     label=f"λ_cls = {lambda_cls}"
+        # )
+        # axes[0].scatter(
+        #     df_Nframe_mean[" Distortion Loss1"],
+        #     df_Nframe_mean[" Accuracy1"],
+        #     marker="o",
+        #     c="deeppink",
+        #     edgecolors="black",
+        #     s=80,
+        #     label=f"λ_cls = {lambda_cls_p}"
+        # )
         
         
 
         # -----------------------------------------------------
-        # P-FRAME
+        # Nframe
         #
         # Frame 2:
         #     X = Distortion Loss2
         #     Y = Accuracy2
         # -----------------------------------------------------
 
-        axes[1].scatter(
+        axes[0].scatter(
             df_unv_mean[" Distortion Loss2"],
             df_unv_mean[" Accuracy2"],
             marker="o",
-            c="deeppink",
+            # c="deeppink",
             s=60,
             label=f"λ_cls = {lambda_cls}"
         )
         
+        axes[0].scatter(
+            df_Nframe_mean[" Distortion Loss2"],
+            df_Nframe_mean[" Accuracy2"],
+            marker="o",
+            # c="deeppink",
+            s=80,
+            label=f"λ_cls = {lambda_cls_p}"
+        )
+          
         axes[1].scatter(
-            df_pframe_mean[" Distortion Loss2"],
-            df_pframe_mean[" Accuracy2"],
+                    df_unv_mean[" Distortion Loss3"],
+                    df_unv_mean[" Accuracy3"],
+                    marker="o",
+                    c="deeppink",
+                    s=60,
+                    label=f"λ_cls = {lambda_cls}"
+                )
+                
+        axes[1].scatter(
+            df_Nframe_mean[" Distortion Loss3"],
+            df_Nframe_mean[" Accuracy3"],
             marker="o",
             edgecolors="black",
             c="deeppink",
             s=80,
             label=f"λ_cls = {lambda_cls_p}"
-        )
-          
-
+                )
+                  
       
         
 
@@ -832,20 +845,27 @@ def plot_rdc_curve_single_rate_multiple_frames(path, title):
     # ---------------------------------------------------------
     # Universal subplot formatting
     # ---------------------------------------------------------
-    axes[0].set_title("Frame 1")
+    axes[0].set_title("Frame 2")
     axes[0].set_xlabel("Distortion Loss")
     axes[0].set_ylabel("Classification Accuracy")
     axes[0].legend()
     axes[0].grid(True, alpha=0.3)
 
     # ---------------------------------------------------------
-    # P-Frame subplot formatting
+    # Nframe subplot formatting
     # ---------------------------------------------------------
-    axes[1].set_title("Frame 2")
+    axes[1].set_title("Frame 3")
     axes[1].set_xlabel("Distortion Loss")
     axes[1].set_ylabel("Classification Accuracy")
     axes[1].legend()
     axes[1].grid(True, alpha=0.3)
+    
+    
+    # axes[1].set_title("Frame 3")
+    # axes[1].set_xlabel("Distortion Loss")
+    # axes[1].set_ylabel("Classification Accuracy")
+    # axes[1].legend()
+    # axes[1].grid(True, alpha=0.3)
 
     # ---------------------------------------------------------
     # Overall title
@@ -1348,8 +1368,8 @@ def main():
     # plot_rdc_curve_single_rate(path = path, title = "RDC Curve for Compressed I-Frame Z=2 L=2")
 
     
-    # plot_rdc_curve_single_rate_multiple_frames("./saved_models/compressed/Iframe_z_dim_4_L_2/Pframe_z_dim_1_L_2", title = "RDC Comparison over R1 = 3 & R2 = 2")
-    # plot_rdc_curve_single_rate_multiple_frames("./saved_models/compressed/Iframe_z_dim_4_L_2/Pframe_z_dim_2_L_2", title = "RDC Comparison over R1 = 3 & R2 = 3")
+    plot_rdc_curve_single_rate_multiple_frames("./saved_models3/stream2/Pframe_z_dim_1_L_2", title = "RDC over Rate=2")
+    # plot_rdc_curve_single_rate_multiple_frames("./saved_models3/stream2/Pframe_z_dim_2_L_2", title = "RDC over Rate=4")
     # plot_rdc_curve_single_rate_multiple_frames("./saved_models/compressed/Iframe_z_dim_12_L_2/Pframe_z_dim_2_L_2", title = "RDC Comparison over R1 = 4.585 & R2 = 3")
     # plot_rdc_curve_single_rate_multiple_frames("./saved_models/compressed/Iframe_z_dim_12_L_2/Pframe_z_dim_4_L_2", title = "RDC Comparison over R1 = 4.585 & R2 = 4")
         
@@ -1360,7 +1380,7 @@ def main():
     
     
     # plot_rdc_curve_single_rate_multiple_frames_universal_only("./saved_models/compressed/I_frame", title = "RDC Comparison for Universal Encoder over R = 12")
-    plot_rdc_curve_single_rate(path = "./saved_models2/compressed/Iframe_z_dim_12_L_2", title = "RDC Curve over R=12 Final")
+    # plot_rdc_curve_single_rate(path = "./saved_models2/compressed/Iframe_z_dim_12_L_2", title = "RDC Curve over R=12 Final")
     
 if __name__ == "__main__":
     main()

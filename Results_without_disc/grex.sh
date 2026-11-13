@@ -1,10 +1,17 @@
+"""
+    TODO's:
+        - create a venv first 
+        - Modify output and error paths line#16, 17
+        
+        - Create a venv and change the path of source , reference line#53
+"""
 #!/bin/bash
 #SBATCH --job-name=lemma
 #SBATCH --time=12:00:00
 #SBATCH --account=def-sadafsk
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=12
+#SBATCH --cpus-per-task=8
 #SBATCH --gpus-per-node=1
 #SBATCH --output=/home/tariq1/projects/Experiments3/logs/lemma2_%j.out
 #SBATCH --error=/home/tariq1/projects/Experiments3/logs/lemma2_%j.err
@@ -23,12 +30,11 @@ TOTAL_EPOCHS_IFRAME=80        # Epochs for I-frame compressor
 TOTAL_EPOCHS_PFRAME=80         # Epochs for P-frame compressor
 TOTAL_EPOCHS_UNIVERSAL=80      # Epochs for universal representation
 TOTAL_EPOCHS_3FRAME=80         # Epochs for 3-frame model
-Z_DIM_IFRAME=4                  # I-frame latent dim
+Z_DIM_IFRAME= 12                # I-frame latent dim
 L_IFRAME=2                     # I-frame quantization levels
-Z_DIM_PFRAME=2                  # P-frame latent dim
+Z_DIM_PFRAME=6                  # P-frame latent dim
 L_PFRAME=2                      # P-frame quantization levels
 DATASET=MNIST
-SAVE_BASE="./saved_models/compressed/Iframe_z_dim_${I_dim}_L_${I_L}"
 
 
 # ============================================================
@@ -58,28 +64,12 @@ python -c "import torch; print(torch.__version__); print(torch.cuda.is_available
 cd "$SLURM_SUBMIT_DIR"
 
 # ============================================================
-# Folder names (must match each script's naming convention)
-# ============================================================
-
-
-IFRAME_FOLDER="Iframe_dim_128_z_dim_${Z_DIM_IFRAME}_L_${L_IFRAME}_single_bit_False_bs_${BS}_lambdaMSE_${LAMBDA_MSE}_lambdaCLS_${LAMBDA_CLS}"
-PFRAME_FOLDER="Pframe_dim_128_z_dim_${Z_DIM_PFRAME}_L_${L_PFRAME}_single_bit_False_bs_${BS}_lambdaMSE_${LAMBDA_MSE}_lambdaCLS_${LAMBDA_CLS}"
-UNIVERSAL_FOLDER="Universal_dim_128_z_dim_${Z_DIM_PFRAME}_L_${L_PFRAME}_single_bit_False_bs_${BS}_lambdaMSE_${LAMBDA_MSE}_lambdaCLS_${LAMBDA_CLS}"
-THREEFRAME_FOLDER="Universal_R1inf_3frames_dim_128_z_dim_${Z_DIM_PFRAME}_L_${L_PFRAME}_single_bit_False_bs_${BS}_lambdaMSE_${LAMBDA_MSE}_lambdaCLS_${LAMBDA_CLS}"
-
-IFRAME_PATH="${SAVE_BASE}/${IFRAME_FOLDER}"
-PFRAME_PATH="${SAVE_BASE}/${PFRAME_FOLDER}"
-UNIVERSAL_PATH="${SAVE_BASE}/${UNIVERSAL_FOLDER}"
-
-
-
-# ============================================================
 # Step 1: I-frame compressor (lambda_cls=different)
 # ============================================================
-echo ""
-echo "============================================"
-echo "Step 1/4: I-frame compressor"
-echo "============================================"
+# echo ""
+# echo "============================================"
+# echo "Step 1/4: I-frame compressor"
+# echo "============================================"
 #python I-frame.py \
  #   --total_epochs ${TOTAL_EPOCHS_IFRAME} \
   # --bs ${BS} \
@@ -88,16 +78,10 @@ echo "============================================"
   #  --lambda_MSE ${LAMBDA_MSE} \
    # --lambda_cls ${LAMBDA_CLS} \
     #--dataset ${DATASET}
+# echo "Step 1 Completed"
+# echo "Finished at $(date)"
+# echo "============================================"
 
-echo "Step 1 complete: ${IFRAME_PATH}"
-echo "Results saved in: ${SAVE_BASE}/"
-echo "Lambda CLS: ${LAMBDA_CLS}"
-echo "Finished at $(date)"
-echo "============================================"
-
-
-
-#step 2 & 3 for compressed will always load the  I-frame with cls = 0.01
 # ============================================================
 # Step 2: P-frame compressor (lambda_cls=different)
 # ============================================================
@@ -105,40 +89,79 @@ echo ""
 echo "============================================"
 echo "Step 2/4: P-frame compressor"
 echo "============================================"
-#python train.py \
- #   --total_epochs ${TOTAL_EPOCHS_PFRAME} \
-  # --bs ${BS} \
-  #  --z_dim ${Z_DIM_PFRAME} \
-  #  --L ${L_PFRAME} \
-   # --lambda_MSE ${LAMBDA_MSE} \
-   # --lambda_cls ${LAMBDA_CLS} \
-   # --dataset ${DATASET}
+python train_f2_stream2.py \
+   --total_epochs ${TOTAL_EPOCHS_PFRAME} \
+  --bs ${BS} \
+   --z_dim ${Z_DIM_PFRAME} \
+   --L ${L_PFRAME} \
+   --lambda_MSE ${LAMBDA_MSE} \
+   --lambda_cls ${LAMBDA_CLS} \
+   --dataset ${DATASET}
 
-echo "Step 1 complete: ${PFRAME_PATH}"
-echo "Results saved in: ${SAVE_BASE}/"
-echo "Lambda CLS: ${LAMBDA_CLS}"
+echo "Step 2 complete"
 echo "Finished at $(date)"
 echo "============================================"
 
 # ============================================================
-# Step 3: Universal Architecture (lambda_cls=different)
+# Step 3: Universa Architecture for 2nd frame
 # ============================================================
 echo ""
 echo "============================================"
 echo "Step 3/4: Universal Architecture"
 echo "============================================"
 
-python train_universal.py \
-    --total_epochs ${TOTAL_EPOCHS_PFRAME} \
+python train_f2_universal_stream2.py \
+    --total_epochs ${TOTAL_EPOCHS_UNIVERSAL} \
    --bs ${BS} \
     --z_dim ${Z_DIM_PFRAME} \
     --L ${L_PFRAME} \
     --lambda_MSE ${LAMBDA_MSE} \
     --lambda_cls ${LAMBDA_CLS} \
     --dataset ${DATASET}
-#
-echo "Step 1 complete: ${UNIVERSAL_PATH}"
-echo "Results saved in: ${SAVE_BASE}/"
-echo "Lambda CLS: ${LAMBDA_CLS}"
+
+echo "Step 3 completed"
+echo "Finished at $(date)"
+echo "============================================"
+
+
+
+# ============================================================
+# Step 3: P-frame compressor (lambda_cls=different)
+# ============================================================
+echo ""
+echo "============================================"
+echo "Step 3/4: P-frame compressor for 3rd frame"
+echo "============================================"
+python train_f3_stream2.py \
+   --total_epochs ${TOTAL_EPOCHS_3FRAME} \
+  --bs ${BS} \
+   --z_dim ${Z_DIM_PFRAME} \
+   --L ${L_PFRAME} \
+   --lambda_MSE ${LAMBDA_MSE} \
+   --lambda_cls ${LAMBDA_CLS} \
+   --dataset ${DATASET}
+
+echo "Step 3 completed"
+echo "Finished at $(date)"
+echo "============================================"
+
+# ============================================================
+# Step 3: Universal Architecture for 3rd frame
+# ============================================================
+echo ""
+echo "============================================"
+echo "Step 4/4: Universal Architecture"
+echo "============================================"
+
+python train_f3_universal_stream2.py \
+    --total_epochs ${TOTAL_EPOCHS_3FRAME} \
+   --bs ${BS} \
+    --z_dim ${Z_DIM_PFRAME} \
+    --L ${L_PFRAME} \
+    --lambda_MSE ${LAMBDA_MSE} \
+    --lambda_cls ${LAMBDA_CLS} \
+    --dataset ${DATASET}
+
+echo "Step 4 completed"
 echo "Finished at $(date)"
 echo "============================================"

@@ -73,7 +73,8 @@ echo ""
 echo "============================================"
 echo "Step 1/4: P-frame compressor"
 echo "============================================"
-python train.py \
+
+python train_f2_stream2.py \
     --total_epochs ${TOTAL_EPOCHS_PFRAME} \
    --bs ${BS} \
     --z_dim ${Z_DIM_PFRAME} \
@@ -88,3 +89,26 @@ echo "Lambda CLS: ${LAMBDA_CLS}"
 echo "Finished at $(date)"
 echo "============================================"
 
+
+# ============================================================
+# Step 1: Universal (lambda_cls=0.0, only MSE)
+# ============================================================
+echo ""
+echo "============================================"
+echo "Step 2/4: Universal Model"
+echo "============================================"
+
+python train_f2_universal_stream2.py \
+    --total_epochs ${TOTAL_EPOCHS_UNIVERSAL} \
+   --bs ${BS} \
+    --z_dim ${Z_DIM_PFRAME} \
+    --L ${L_PFRAME} \
+    --lambda_MSE ${LAMBDA_MSE} \
+    --lambda_cls ${LAMDBA_CLS} \
+    --dataset ${DATASET}
+#
+echo "Step 2 complete: ${UNIVERSAL_PATH}"
+echo "Results saved in: ${SAVE_BASE}/"
+echo "Lambda CLS: ${LAMBDA_CLS}"
+echo "Finished at $(date)"
+echo "============================================"
