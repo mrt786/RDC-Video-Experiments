@@ -463,8 +463,6 @@ class ScaleSpaceFlow(nn.Module):
     def forward(self, x_cur, x_ref):
         if not self.freeze_enc:
             # encode the motion information
-            print(x_cur.shape, x_ref.shape)
-            exit(0)
             x = torch.cat((x_cur, x_ref), dim=1)
             y_motion = self.motion_encoder(x)
 

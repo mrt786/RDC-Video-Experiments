@@ -36,7 +36,7 @@ class DiscriminatorMNIST(nn.Module):
 
     def forward(self, x):
         x = self.main(x)
-        x = x.view(-1, 4096)
+        x = x.reshape(-1, 4096)
         x = self.fc(x)
         return x
 

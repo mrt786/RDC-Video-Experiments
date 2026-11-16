@@ -141,303 +141,303 @@ def set_opt_zero(opts):
 
         
         
-def preview_reconstructed(
-    x_ref_recon,
-    labels,
-    out_dir,
-    epoch
-):
-    """
-    Save a PNG preview showing pixel values of ONLY x_ref_recon[0].
+# def preview_reconstructed(
+#     x_ref_recon,
+#     labels,
+#     out_dir,
+#     epoch
+# ):
+#     """
+#     Save a PNG preview showing pixel values of ONLY x_ref_recon[0].
 
-    The reconstructed I-frame is converted from [0,1]
-    to integer pixel values [0,255].
-    """
+#     The reconstructed I-frame is converted from [0,1]
+#     to integer pixel values [0,255].
+#     """
 
-    # ---------------------------------------------------------
-    # Use ONLY the zeroth reconstructed image
-    # ---------------------------------------------------------
-    img = x_ref_recon[0]
+#     # ---------------------------------------------------------
+#     # Use ONLY the zeroth reconstructed image
+#     # ---------------------------------------------------------
+#     img = x_ref_recon[0]
 
-    # ---------------------------------------------------------
-    # Image size
-    # ---------------------------------------------------------
-    height, width = img.shape[-2:]
+#     # ---------------------------------------------------------
+#     # Image size
+#     # ---------------------------------------------------------
+#     height, width = img.shape[-2:]
 
-    print(f"Image size: {height} x {width}")
+#     print(f"Image size: {height} x {width}")
 
-    # ---------------------------------------------------------
-    # Convert [1,H,W] -> [H,W]
-    # ---------------------------------------------------------
-    img = (
-        img.detach()
-        .cpu()
-        .squeeze()
-        .numpy()
-    )
+#     # ---------------------------------------------------------
+#     # Convert [1,H,W] -> [H,W]
+#     # ---------------------------------------------------------
+#     img = (
+#         img.detach()
+#         .cpu()
+#         .squeeze()
+#         .numpy()
+#     )
 
-    # ---------------------------------------------------------
-    # Convert [0,1] -> integer [0,255]
-    # ---------------------------------------------------------
-    pixel_values = np.clip(
-        np.round(img * 255),
-        0,
-        255
-    ).astype(np.uint8)
+#     # ---------------------------------------------------------
+#     # Convert [0,1] -> integer [0,255]
+#     # ---------------------------------------------------------
+#     pixel_values = np.clip(
+#         np.round(img * 255),
+#         0,
+#         255
+#     ).astype(np.uint8)
 
-    # ---------------------------------------------------------
-    # Create figure
-    # ---------------------------------------------------------
-    fig, ax = plt.subplots(
-        figsize=(8, 8)
-    )
+#     # ---------------------------------------------------------
+#     # Create figure
+#     # ---------------------------------------------------------
+#     fig, ax = plt.subplots(
+#         figsize=(8, 8)
+#     )
 
-    # ---------------------------------------------------------
-    # Display reconstructed image
-    # ---------------------------------------------------------
-    ax.imshow(
-        pixel_values,
-        cmap='gray',
-        vmin=0,
-        vmax=255
-    )
+#     # ---------------------------------------------------------
+#     # Display reconstructed image
+#     # ---------------------------------------------------------
+#     ax.imshow(
+#         pixel_values,
+#         cmap='gray',
+#         vmin=0,
+#         vmax=255
+#     )
 
-    ax.axis('off')
+#     ax.axis('off')
 
-    # ---------------------------------------------------------
-    # Write pixel values
-    # ---------------------------------------------------------
-    for row in range(height):
-        for col in range(width):
+#     # ---------------------------------------------------------
+#     # Write pixel values
+#     # ---------------------------------------------------------
+#     for row in range(height):
+#         for col in range(width):
 
-            value = pixel_values[row, col]
+#             value = pixel_values[row, col]
 
-            text_color = (
-                'white'
-                if value < 128
-                else 'black'
-            )
+#             text_color = (
+#                 'white'
+#                 if value < 128
+#                 else 'black'
+#             )
 
-            ax.text(
-                col,
-                row,
-                str(value),
-                ha='center',
-                va='center',
-                fontsize=5,
-                color=text_color
-            )
+#             ax.text(
+#                 col,
+#                 row,
+#                 str(value),
+#                 ha='center',
+#                 va='center',
+#                 fontsize=5,
+#                 color=text_color
+#             )
 
-    # ---------------------------------------------------------
-    # Digit label
-    # ---------------------------------------------------------
-    digit_label = labels[0].item()
+#     # ---------------------------------------------------------
+#     # Digit label
+#     # ---------------------------------------------------------
+#     digit_label = labels[0].item()
 
-    ax.set_title(
-        f"Frame 1 (I-frame Recon) | Digit {digit_label}",
-        fontsize=12
-    )
+#     ax.set_title(
+#         f"Frame 1 (I-frame Recon) | Digit {digit_label}",
+#         fontsize=12
+#     )
 
-    # ---------------------------------------------------------
-    # Figure title
-    # ---------------------------------------------------------
-    fig.suptitle(
-        f"Epoch {epoch + 1} | "
-        f"Reconstructed I-frame Pixel Values | "
-        f"Image Size = {width}×{height} | ",
-        fontsize=13,
-        weight='bold'
-    )
+#     # ---------------------------------------------------------
+#     # Figure title
+#     # ---------------------------------------------------------
+#     fig.suptitle(
+#         f"Epoch {epoch + 1} | "
+#         f"Reconstructed I-frame Pixel Values | "
+#         f"Image Size = {width}×{height} | ",
+#         fontsize=13,
+#         weight='bold'
+#     )
 
-    plt.tight_layout()
+#     plt.tight_layout()
 
-    # ---------------------------------------------------------
-    # Save
-    # ---------------------------------------------------------
-    os.makedirs(
-        out_dir,
-        exist_ok=True
-    )
+#     # ---------------------------------------------------------
+#     # Save
+#     # ---------------------------------------------------------
+#     os.makedirs(
+#         out_dir,
+#         exist_ok=True
+#     )
 
-    path = os.path.join(
-        out_dir,
-        f"preview_reconstructed_epoch_{epoch + 1:04d}.png"
-    )
+#     path = os.path.join(
+#         out_dir,
+#         f"preview_reconstructed_epoch_{epoch + 1:04d}.png"
+#     )
 
-    plt.savefig(
-        path,
-        dpi=150,
-        bbox_inches='tight'
-    )
+#     plt.savefig(
+#         path,
+#         dpi=150,
+#         bbox_inches='tight'
+#     )
 
-    plt.close(fig)
+#     plt.close(fig)
 
-    print(
-        f"Saved reconstructed pixel preview: {path}"
-    )
+#     print(
+#         f"Saved reconstructed pixel preview: {path}"
+#     )
 
 
 
-def save_pixel_value_preview_iframe(
-    x1,
-    x1_hat,
-    labels,
-    out_dir,
-    epoch,
-    lambda_cls
-):
-    """
-    Save pixel values for one or more I-frame source/reconstruction pairs.
+# def save_pixel_value_preview_iframe(
+#     x1,
+#     x1_hat,
+#     labels,
+#     out_dir,
+#     epoch,
+#     lambda_cls
+# ):
+#     """
+#     Save pixel values for one or more I-frame source/reconstruction pairs.
 
-    x1:
-        Original I-frame, shape [B, C, H, W]
+#     x1:
+#         Original I-frame, shape [B, C, H, W]
 
-    x1_hat:
-        Reconstructed I-frame, shape [B, C, H, W]
+#     x1_hat:
+#         Reconstructed I-frame, shape [B, C, H, W]
 
-    labels:
-        MNIST labels, shape [B]
-    """
+#     labels:
+#         MNIST labels, shape [B]
+#     """
 
-    n = x1.size(0)
+#     n = x1.size(0)
 
-    # ---------------------------------------------------------
-    # Image size
-    # ---------------------------------------------------------
-    height, width = x1.shape[-2:]
+#     # ---------------------------------------------------------
+#     # Image size
+#     # ---------------------------------------------------------
+#     height, width = x1.shape[-2:]
 
-    print(f"Image size: {height} x {width}")
+#     print(f"Image size: {height} x {width}")
 
-    # ---------------------------------------------------------
-    # Create figure
-    # ---------------------------------------------------------
-    fig, axes = plt.subplots(
-        n,
-        2,
-        figsize=(10, 4 * n)
-    )
+#     # ---------------------------------------------------------
+#     # Create figure
+#     # ---------------------------------------------------------
+#     fig, axes = plt.subplots(
+#         n,
+#         2,
+#         figsize=(10, 4 * n)
+#     )
 
-    # Important: when n == 1, axes is 1-dimensional
-    if n == 1:
-        axes = np.expand_dims(axes, axis=0)
+#     # Important: when n == 1, axes is 1-dimensional
+#     if n == 1:
+#         axes = np.expand_dims(axes, axis=0)
 
-    col_titles = [
-        'Frame 1\n(Source)',
-        'Frame 1\n(I-frame Recon)'
-    ]
+#     col_titles = [
+#         'Frame 1\n(Source)',
+#         'Frame 1\n(I-frame Recon)'
+#     ]
 
-    for col_idx, title in enumerate(col_titles):
-        axes[0, col_idx].set_title(
-            title,
-            fontsize=11
-        )
+#     for col_idx, title in enumerate(col_titles):
+#         axes[0, col_idx].set_title(
+#             title,
+#             fontsize=11
+#         )
 
-    # ---------------------------------------------------------
-    # Draw source + reconstruction
-    # ---------------------------------------------------------
-    for idx in range(n):
+#     # ---------------------------------------------------------
+#     # Draw source + reconstruction
+#     # ---------------------------------------------------------
+#     for idx in range(n):
 
-        digit_label = labels[idx].item()
+#         digit_label = labels[idx].item()
 
-        imgs = [
-            x1[idx],
-            x1_hat[idx]
-        ]
+#         imgs = [
+#             x1[idx],
+#             x1_hat[idx]
+#         ]
 
-        for col_idx, img in enumerate(imgs):
+#         for col_idx, img in enumerate(imgs):
 
-            # [1,H,W] -> [H,W]
-            img = img.detach().cpu().squeeze().numpy()
+#             # [1,H,W] -> [H,W]
+#             img = img.detach().cpu().squeeze().numpy()
 
-            # [0,1] -> [0,255]
-            pixel_values = np.clip(
-                np.round(img * 255),
-                0,
-                255
-            ).astype(np.uint8)
+#             # [0,1] -> [0,255]
+#             pixel_values = np.clip(
+#                 np.round(img * 255),
+#                 0,
+#                 255
+#             ).astype(np.uint8)
 
-            axes[idx, col_idx].imshow(
-                pixel_values,
-                cmap='gray',
-                vmin=0,
-                vmax=255
-            )
+#             axes[idx, col_idx].imshow(
+#                 pixel_values,
+#                 cmap='gray',
+#                 vmin=0,
+#                 vmax=255
+#             )
 
-            axes[idx, col_idx].axis('off')
+#             axes[idx, col_idx].axis('off')
 
-            # -------------------------------------------------
-            # Write pixel values
-            # -------------------------------------------------
-            for row in range(height):
-                for col in range(width):
+#             # -------------------------------------------------
+#             # Write pixel values
+#             # -------------------------------------------------
+#             for row in range(height):
+#                 for col in range(width):
 
-                    value = pixel_values[row, col]
+#                     value = pixel_values[row, col]
 
-                    text_color = (
-                        'white'
-                        if value < 128
-                        else 'black'
-                    )
+#                     text_color = (
+#                         'white'
+#                         if value < 128
+#                         else 'black'
+#                     )
 
-                    axes[idx, col_idx].text(
-                        col,
-                        row,
-                        str(value),
-                        ha='center',
-                        va='center',
-                        fontsize=5,
-                        color=text_color
-                    )
+#                     axes[idx, col_idx].text(
+#                         col,
+#                         row,
+#                         str(value),
+#                         ha='center',
+#                         va='center',
+#                         fontsize=5,
+#                         color=text_color
+#                     )
 
-        axes[idx, 0].set_ylabel(
-            f"Digit {digit_label}",
-            fontsize=11,
-            rotation=0,
-            labelpad=50,
-            va='center'
-        )
+#         axes[idx, 0].set_ylabel(
+#             f"Digit {digit_label}",
+#             fontsize=11,
+#             rotation=0,
+#             labelpad=50,
+#             va='center'
+#         )
 
-    # ---------------------------------------------------------
-    # Title
-    # ---------------------------------------------------------
-    fig.suptitle(
-        f"Epoch {epoch + 1} | "
-        f"I-frame Pixel Values | "
-        f"Image Size = {width}×{height} | "
-        f"Lambda_Cls = {lambda_cls}",
-        fontsize=13,
-        weight='bold'
-    )
+#     # ---------------------------------------------------------
+#     # Title
+#     # ---------------------------------------------------------
+#     fig.suptitle(
+#         f"Epoch {epoch + 1} | "
+#         f"I-frame Pixel Values | "
+#         f"Image Size = {width}×{height} | "
+#         f"Lambda_Cls = {lambda_cls}",
+#         fontsize=13,
+#         weight='bold'
+#     )
 
-    plt.tight_layout()
+#     plt.tight_layout()
 
-    # ---------------------------------------------------------
-    # Save
-    # ---------------------------------------------------------
-    os.makedirs(out_dir, exist_ok=True)
+#     # ---------------------------------------------------------
+#     # Save
+#     # ---------------------------------------------------------
+#     os.makedirs(out_dir, exist_ok=True)
 
-    path = os.path.join(
-        out_dir,
-        f"pixel_epoch_{epoch + 1:04d}.png"
-    )
+#     path = os.path.join(
+#         out_dir,
+#         f"pixel_epoch_{epoch + 1:04d}.png"
+#     )
 
-    plt.savefig(
-        path,
-        dpi=150,
-        bbox_inches='tight'
-    )
+#     plt.savefig(
+#         path,
+#         dpi=150,
+#         bbox_inches='tight'
+#     )
 
-    plt.close(fig)
+#     plt.close(fig)
 
-    print(f"Saved pixel-value preview: {path}")
+#     print(f"Saved pixel-value preview: {path}")
     
     
-    preview_reconstructed(
-        x_ref_recon=x1_hat,
-        labels=labels,
-        out_dir=out_dir,
-        epoch=epoch,
-    )
+#     preview_reconstructed(
+#         x_ref_recon=x1_hat,
+#         labels=labels,
+#         out_dir=out_dir,
+#         epoch=epoch,
+#     )
 
 def save_recon_preview_iframe(encoder, decoder, vis_batch, device, out_dir, epoch, lambda_cls, num_show=3):
     """Save a PNG grid: source x1 | reconstructed x1_hat."""
@@ -500,9 +500,9 @@ def save_recon_preview_iframe(encoder, decoder, vis_batch, device, out_dir, epoc
     plt.close(fig)
     print(f"Saved reconstruction preview: {path}")
     
-    save_pixel_value_preview_iframe(
-        x1[0:1],x1_hat[0:1], y[0:1] , out_dir, epoch, lambda_cls
-    )
+    # save_pixel_value_preview_iframe(
+    #     x1[0:1],x1_hat[0:1], y[0:1] , out_dir, epoch, lambda_cls
+    # )
     
     
     if was_training_encoder:
@@ -573,9 +573,9 @@ def main():
     )
     print("Settings: ", folder_name)
 
-    save_dir = f'./saved_models/Disc/compressed/Iframe_z_dim_{z_dim}_L_{L}/' + folder_name
+    save_dir = f'./saved_models/Iframe_Models/Iframe_z_dim_{z_dim}_L_{L}/' + folder_name
     os.makedirs(save_dir, exist_ok=True)
-
+    
     if pre_path != 'None':
         encoder.load_state_dict(torch.load(pre_path + '/encoder.pth'))
         decoder.load_state_dict(torch.load(pre_path + '/decoder.pth'))
@@ -648,7 +648,6 @@ def main():
                 # Enable discriminator gradients
                 for param in discriminator.parameters():
                     param.requires_grad = True
-
                 opt_d.zero_grad()
 
                 with torch.no_grad():
